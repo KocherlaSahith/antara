@@ -1,38 +1,141 @@
-.App {
-  text-align: center;
+
+
+:root{
+  --bg-hero-1: #fff0f8;
+  --bg-hero-2: #fff6fb;
+  --hot-pink: #ff007f;    /* electric */
+  --neon-magenta: #ff2ecc;/* neon */
+  --deep-fuchsia: #b2006d;
+  --orchid: #b83280;
+  --glass-white: rgba(255,255,255,0.9);
+  --glass-soft: rgba(255,255,255,0.75);
+  --muted: #5b5160;
+  --shadow-strong: 0 28px 80px rgba(178,0,109,0.12);
+  --radius-xl: 22px;
+  --radius-lg: 14px;
+  --ease: cubic-bezier(.16,.9,.3,1);
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+*{box-sizing:border-box}
+html,body,#root{height:100%}
+body{margin:0;font-family:Inter, 'Segoe UI', Roboto, system-ui; background:linear-gradient(180deg,var(--bg-hero-1),var(--bg-hero-2));color:#120317}
+
+.acf-root{max-width:1200px;margin:22px auto;padding:20px;position:relative;z-index:10}
+
+/* HYPER BACKGROUND: animated neon ribbons + particles */
+.acf-root::before{
+  content:"";position:absolute;inset:-30%;z-index:-3;background:radial-gradient(600px 300px at 10% 10%, rgba(255,46,204,0.08), transparent 12%), radial-gradient(500px 260px at 90% 80%, rgba(255,0,127,0.06), transparent 15%);
+  filter:blur(32px);animation:slowShift 16s linear infinite}
+
+.acf-root::after{
+  content:"";position:absolute;inset:0;z-index:-2;pointer-events:none;background-image:repeating-linear-gradient(120deg, rgba(255,14,122,0.02) 0 2px, transparent 2px 26px);mix-blend-mode:overlay;opacity:0.7}
+
+@keyframes slowShift{0%{transform:translateY(0) scale(1)}50%{transform:translateY(-18px) scale(1.02)}100%{transform:translateY(0) scale(1)}}
+
+/* HERO (large 3D header) */
+.acf-hero{display:flex;align-items:center;gap:24px;padding:22px;border-radius:var(--radius-xl);background:linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,244,250,0.9));box-shadow:var(--shadow-strong);transform:translateZ(0);overflow:hidden}
+
+.acf-title{font-size:34px;margin:0;color:var(--deep-fuchsia);font-weight:900;letter-spacing:-0.6px;text-shadow:0 18px 40px rgba(255,46,204,0.06);display:inline-block}
+.acf-sub{color:var(--muted);margin-top:8px;font-size:15px}
+
+/* 3D glint on title */
+.acf-title .glint{display:inline-block;position:relative}
+.acf-title .glint::before{content:"";position:absolute;left:-6px;top:-8px;width:120%;height:130%;background:linear-gradient(120deg, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0.02) 60%);transform:skewX(-22deg) translateX(-120%);opacity:0;transition:transform .9s var(--ease),opacity .9s var(--ease)}
+.acf-title:hover .glint::before{transform:skewX(-22deg) translateX(0);opacity:1}
+
+/* BUTTONS: glossy neon, big, bouncy */
+.acf-controls{display:flex;flex-wrap:wrap;gap:12px;margin-top:14px}
+.acf-btn{position:relative;padding:12px 18px;border-radius:12px;border:none;font-weight:800;cursor:pointer;min-width:140px;transition:transform .18s var(--ease),box-shadow .18s var(--ease);box-shadow:0 10px 32px rgba(178,0,109,0.06);background:linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,244,248,0.95))}
+.acf-btn:hover{transform:translateY(-6px)}
+.acf-btn:active{transform:translateY(-2px)}
+
+.acf-btn-primary{color:white;background:linear-gradient(90deg,var(--hot-pink),var(--neon-magenta));box-shadow:0 18px 60px rgba(255,46,204,0.16), inset 0 -6px 18px rgba(255,255,255,0.04)}
+.acf-btn-primary::after{content:"";position:absolute;inset:0;border-radius:12px;mix-blend-mode:overlay;background:linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02))}
+.acf-btn-ghost{background:transparent;border:1px solid rgba(178,0,109,0.08);color:var(--deep-fuchsia)}
+
+/* spotlight card - neon glass */
+.acf-card-spotlight{width:170px;height:140px;border-radius:18px;padding:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(180deg, rgba(255,255,255,0.75), rgba(255,241,247,0.65));border:1px solid rgba(255,255,255,0.55);backdrop-filter: blur(6px);box-shadow:0 22px 60px rgba(178,0,109,0.08)}
+.acf-emoji{font-size:40px}
+.acf-card-text{margin-top:8px;font-weight:800;color:var(--neon-magenta)}
+
+/* STAGE layout */
+.acf-stage{display:flex;gap:20px;margin-top:20px}
+.acf-panel{width:280px}
+.acf-content{flex:1}
+
+/* QUICK PICKS with neon outlines */
+.acf-quick{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.acf-quick-btn{padding:12px;border-radius:12px;background:linear-gradient(180deg,#fff,#fffaf7);border:1px solid rgba(178,0,109,0.06);font-weight:800;cursor:pointer;transition:transform .18s var(--ease)}
+.acf-quick-btn:hover{transform:translateY(-8px);box-shadow:0 22px 60px rgba(178,0,109,0.08)}
+
+.acf-info{margin-top:14px;padding:14px;border-radius:12px;background:linear-gradient(90deg,#fff,#fffaf7);color:var(--muted)}
+
+/* MAIN CARD - full depth and animation */
+.acf-card.acf-main{padding:26px;border-radius:18px;background:linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,241,246,0.93));box-shadow:0 40px 120px rgba(178,0,109,0.12);min-height:240px;position:relative;overflow:visible;transition:transform .28s var(--ease),box-shadow .28s var(--ease)}
+.acf-card.acf-active{transform:translateY(-14px);box-shadow:0 60px 170px rgba(178,0,109,0.18)}
+
+.acf-welcome-title{font-size:22px;color:var(--deep-fuchsia);margin:0}
+.acf-welcome-desc{color:var(--muted);margin-top:8px}
+
+/* MESSAGE styles with neon headings */
+.acf-message h2{margin:0 0 12px;color:var(--hot-pink);font-weight:900;text-shadow:0 8px 24px rgba(255,46,204,0.06)}
+.acf-message ul, .acf-message ol{padding-left:18px;color:var(--muted)}
+.acf-actions{margin-top:18px;display:flex;gap:14px}
+
+/* HUG art: animated pulse + glow */
+.acf-hug-art{font-size:56px;margin-bottom:6px;display:inline-block;animation:hugPulse 2.2s infinite both}
+@keyframes hugPulse{0%{transform:scale(.98);filter:drop-shadow(0 6px 18px rgba(255,46,204,0.06))}50%{transform:scale(1.04);filter:drop-shadow(0 18px 40px rgba(255,46,204,0.18))}100%{transform:scale(.98);filter:drop-shadow(0 6px 18px rgba(255,46,204,0.06))}}
+
+/* CONFETTI: now with layered shimmer and pop */
+.acf-confetti{position:relative;height:0;margin-top:6px;pointer-events:none}
+.acf-confetti-piece{position:absolute;font-size:20px;opacity:0;filter:drop-shadow(0 10px 20px rgba(178,0,109,0.12));animation:popNFloat 1s var(--ease) forwards}
+.acf-confetti-piece:nth-child(1){left:10%;animation-delay:0s}
+.acf-confetti-piece:nth-child(2){left:26%;animation-delay:0.05s}
+.acf-confetti-piece:nth-child(3){left:42%;animation-delay:0.09s}
+.acf-confetti-piece:nth-child(4){left:58%;animation-delay:0.12s}
+.acf-confetti-piece:nth-child(5){left:74%;animation-delay:0.16s}
+.acf-confetti-piece:nth-child(6){left:88%;animation-delay:0.2s}
+
+@keyframes popNFloat{0%{transform:translateY(0) scale(.6) rotate(0);opacity:0}10%{opacity:1}100%{transform:translateY(-200px) scale(1.02) rotate(540deg);opacity:1}}
+
+/* ELECTRIC PARTICLE FIELD (CSS-only subtle dots) */
+.acf-particles{position:absolute;inset:0;pointer-events:none;z-index:-1}
+.acf-particles span{position:absolute;width:6px;height:6px;border-radius:50%;background:radial-gradient(circle,#ff9ad2,#ff3b9a);opacity:0.12;transform:scale(.9);animation:particleFloat 8s linear infinite}
+@keyframes particleFloat{0%{transform:translateY(0) scale(.9)}50%{transform:translateY(-20px) scale(1)}100%{transform:translateY(0) scale(.9)}}
+
+/* floating petals / bubbles bigger and glowy */
+.acf-bubbles{position:fixed;right:18px;bottom:12px;pointer-events:none;display:flex;flex-direction:column;gap:12px;z-index:9}
+.acf-bubble{font-size:20px;opacity:0.95;animation:petalFloat 6.6s linear infinite}
+@keyframes petalFloat{0%{transform:translateY(0) rotate(0);opacity:0}10%{opacity:1}100%{transform:translateY(-520px) rotate(28deg);opacity:0}}
+
+/* SPARKLE SHIMMER overlay for hero/spotlight */
+.acf-spotlight-shimmer{position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.08),transparent);mix-blend-mode:screen;opacity:0.85;animation:shimmerMove 2.6s linear infinite}
+@keyframes shimmerMove{0%{transform:translateX(-24%)}100%{transform:translateX(124%)}}
+
+/* micro-interactions */
+.acf-btn, .acf-quick-btn{transition:transform .18s var(--ease), box-shadow .18s var(--ease)}
+.acf-card-spotlight{transition:transform .6s var(--ease), box-shadow .4s var(--ease)}
+
+/* responsive */
+@media (max-width:920px){
+  .acf-hero{flex-direction:column;align-items:flex-start;padding:16px}
+  .acf-hero-right{width:100%;display:flex;justify-content:flex-start}
+  .acf-card-spotlight{width:130px;height:110px;border-radius:12px}
+  .acf-stage{flex-direction:column}
+  .acf-panel{width:100%}
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+@media (max-width:420px){
+  .acf-title{font-size:20px}
+  .acf-btn{min-width:100px;padding:10px 12px;border-radius:10px;font-size:13px}
+  .acf-card.acf-main{padding:16px}
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
+/* accessibility */
+.acf-btn:focus-visible, .acf-quick-btn:focus-visible{outline:3px solid rgba(255,46,204,0.12);outline-offset:4px;border-radius:12px}
 
-.App-link {
-  color: #61dafb;
-}
+/* utility tiny animations referenced from JS (shake, pop) */
+@keyframes tinyShake{0%{transform:translateX(0)}25%{transform:translateX(-6px)}50%{transform:translateX(6px)}75%{transform:translateX(-3px)}100%{transform:translateX(0)}}
+@keyframes popScale{0%{transform:scale(.86) }60%{transform:scale(1.06)}100%{transform:scale(1)}}
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
+/* END ULTRA PINK */
